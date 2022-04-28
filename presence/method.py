@@ -2,15 +2,11 @@ import face_recognition
 import cv2
 import numpy as np
 import os
+
 from .models import Presence
 from datetime import datetime
 from personnels.models import Personnel
-import pyautogui
-import win32com.client as comclt
-
 from test7.settings import MEDIA_ROOT
-
-
 
 
 def prepare_path(base,url_inv):
@@ -87,22 +83,12 @@ def f_recognition(personnels):
             right *= 4
             bottom *= 4
             left *= 4
-            # Draw a box around the face
             cv2.rectangle(frame, (left, top), (right, bottom), (0, 0, 255), 2)
-            # Draw a label with a name below the face
             cv2.rectangle(frame, (left, bottom - 35), (right, bottom), (0, 0, 255), cv2.FILLED)
             font = cv2.FONT_HERSHEY_DUPLEX
             cv2.putText(frame, name, (left + 6, bottom - 6), font, 1.0, (255, 255, 255), 1)
-        # Display the resulting image
         cv2.imshow('Video', frame)
-        # Hit 'q' on the keyboard to quit!
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
-    # Release handle to the webcam
     video_capture.release()
     cv2.destroyAllWindows()
-
-
-
-def f_recognitionOff():
-   print('test\n')

@@ -14,17 +14,13 @@ from rest_framework.decorators import api_view ,parser_classes
 def presence_list(request,format=None):
     if request.method == 'GET':
         presences = Presence.objects.all()
-        
         cin = request.query_params.get('cin', None)
         if cin is not None:
             presences = presences.filter(cin__icontains=cin)
-        
         presences_serializer = PresenceSerializer(presences, many=True)
         return JsonResponse(presences_serializer.data, safe=False)
-        # 'safe=False' for objects serialization
  
     elif request.method == 'POST':
-        #personnel_data = FormParser().parse(request)
         presence_serializer = PresenceSerializer(data=request.data)
         if presence_serializer.is_valid():
             presence_serializer.save()
@@ -35,13 +31,7 @@ def presence_list(request,format=None):
         count = Presence.objects.all().delete()
         return JsonResponse({'message': '{} Presences were deleted successfully!'.format(count[0])}, status=status.HTTP_204_NO_CONTENT)
  
- 
-#@api_view(['GET', 'PUT', 'DELETE'])
-#def presence_detail(request, pk):
-    # try: 
-    #     presence = Presence.objects.get(pk=pk) 
-    # except Presence.DoesNotExist: 
-    #     return JsonResponse({'message': 'The presence does not exist'}, status=status.HTTP_404_NOT_FOUND) 
+
 @api_view(['GET', 'PUT', 'DELETE'])
 def presence_detail(request, cin,date): 
     try: 
@@ -66,30 +56,12 @@ def presence_detail(request, cin,date):
         return JsonResponse({'message': 'Presence was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)
 
 
-#@api_view(['GET'])
-#@parser_classes([MultiPartParser,FormParser])
-#def presence_personnel_list(request):
-       # if request.method == 'GET':
-           # presencePersonneljoins = Presence.objects.select_related('cin')
-           # print( presencePersonneljoins)
-           # presencePersonneljoin_serializer = PresenceSerializer2(presencePersonneljoins, many=True)
-
-           # return JsonResponse(presencePersonneljoin_serializer.data, status=status.HTTP_201_CREATED,safe=False)
-
 @api_view(['GET'])
 def recognition(request):
     if request.method == 'GET':
         personnels=Personnel.objects.all()
         f_recognition(personnels)
         return JsonResponse( status=status.HTTP_201_CREATED)
-
-
-@api_view(['GET'])
-def recognitionOff(request):
-    if request.method == 'GET':
-        f_recognitionOff()
-        return JsonResponse( status=status.HTTP_201_CREATED)
-
 
 
 @api_view(['GET'])

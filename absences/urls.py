@@ -6,5 +6,4 @@ urlpatterns = [
     url(r'^api/absences/(?P<pk>[0-9]+)$', views.absence_detail),
     url(r'^api/absenceAujourdhui$', views.absence_aujourdhui),
 
-    
 ]

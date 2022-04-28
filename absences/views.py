@@ -36,11 +36,6 @@ def absence_list(request,format=None):
  
 @api_view(['GET', 'PUT', 'DELETE'])
 def absence_detail(request, pk):
-    # try: 
-    #     absence = Absence.objects.get(pk=pk) 
-    # except Absence.DoesNotExist: 
-    #     return JsonResponse({'message': 'The Absence does not exist'}, status=status.HTTP_404_NOT_FOUND) 
-
     try: 
         
         absence = Absence.objects.get(pk=pk) 
